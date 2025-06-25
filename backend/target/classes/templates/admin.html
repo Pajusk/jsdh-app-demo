@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Jsdh-App od Pajusk" />
+  <meta name="keywords" content="Hasiči, Pajusk" />
+  <meta name="author" content="Pajusk" />
+  <title>Administrace – JSDH Ostrava Heřmanice</title>
+
+  <!-- CSS styly: Bootstrap + vlastní styly -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+
+<!-- Hlavička stránky s menu, vkládá se fragment menu -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+  <h1 class="mb-4 text-center">Administrace</h1>
+
+  <div class="card p-4 shadow-sm">
+
+    <!-- Sekce s aktuálním aktivním výjezdem -->
+    <h5 class="mb-3">Aktivní výjezd:</h5>
+    <div th:if="${aktivniVyjezd != null}">
+      <!-- Zobrazujeme detaily aktivního výjezdu -->
+      <p><b>Typ výjezdu:</b> <span th:text="${aktivniVyjezd.typVyjezdu}"></span></p>
+      <p><b>Adresa:</b> <span th:text="${aktivniVyjezd.kraj + ', ' + aktivniVyjezd.obec + ', ' + aktivniVyjezd.castObce + ', ' + aktivniVyjezd.ulice}"></span></p>
+      <p><b>Technika Heřmanice:</b> <span th:text="${aktivniVyjezd.technikaHermanice}"></span></p>
+      <p><b>GPS:</b> <span th:text="${aktivniVyjezd.gps}"></span></p>
+      <p><b>Datum a čas:</b> <span th:text="${aktivniVyjezd.datumCas}"></span></p>
+    </div>
+
+    <hr class="my-4" />
+
+    <!-- Formulář pro aktivaci testovacích výjezdů -->
+    <form method="post" th:action="@{/admin/aktivovat}">
+      <button type="submit" name="cislo" value="1" class="btn btn-primary">Vyjezd 1 - Technická pomoc</button>
+      <button type="submit" name="cislo" value="2" class="btn btn-primary">Vyjezd 2 - Požár</button>
+      <button type="submit" name="cislo" value="3" class="btn btn-primary">Vyjezd 3 - Dopravní nehoda</button>
+    </form>
+
+  </div>
+</main>
+
+<!-- JS knihovny: Bootstrap + vlastní skripty -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

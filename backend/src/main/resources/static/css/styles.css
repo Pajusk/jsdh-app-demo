@@ -1,0 +1,27 @@
+/* Vlastní styly pro hlavičku */
+
+header {
+    background-color: #f8f9fa; /* světlá béžová/barva pozadí */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .logo-square {
+    width: 40px;
+    height: 40px;
+    background-color: #9ec5fe; /* pastelová modrá */
+    border-radius: 4px;
+    margin-right: 12px;
+  }
+  
+  .nav-link {
+    font-weight: 600;
+  }
+  
+  /* Responzivní úprava menu na menších obrazovkách */
+  @media (max-width: 576px) {
+    nav ul.nav {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  

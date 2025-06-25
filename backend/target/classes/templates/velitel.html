@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Jsdh-App od Pajusk" />
+    <meta name="keywords" content="Hasiči, Pajusk" />
+    <meta name="author" content="Pajusk" />
+    <title>Stanice – JSDH Ostrava Heřmanice</title>
+
+    <!-- Bootstrap CSS a vlastní styly -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+
+<!-- Hlavička (menu) načtená z fragmentu -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <!-- Blok s informacemi o aktivním výjezdu -->
+    <div class="card mb-4 p-4 shadow-sm">
+        <h3 class="mb-3">Aktivní výjezd</h3>
+
+        <!-- Pokud existuje aktivní výjezd, zobraz jeho detaily -->
+        <div th:if="${aktivniVyjezd != null}">
+            <p><strong>Typ výjezdu:</strong> <span th:text="${aktivniVyjezd.typVyjezdu}"></span></p>
+            <p><strong>Adresa:</strong>
+                <span th:text="${aktivniVyjezd.kraj + ', ' + aktivniVyjezd.obec + ', ' + aktivniVyjezd.castObce + ', ' + aktivniVyjezd.ulice}"></span>
+            </p>
+            <p><strong>Technika Heřmanice:</strong> <span th:text="${aktivniVyjezd.technikaHermanice}"></span></p>
+            <p><strong>GPS:</strong> <span th:text="${aktivniVyjezd.gps}"></span></p>
+            <p><strong>Datum a čas:</strong> <span th:text="${aktivniVyjezd.datumCas}"></span></p>
+        </div>
+
+        <!-- Pokud není žádný aktivní výjezd, zobraz tuto zprávu -->
+        <div th:if="${aktivniVyjezd == null}">
+            <p>Žádný aktivní výjezd.</p>
+        </div>
+    </div>
+
+    <!-- Blok se seznamem členů a jejich potvrzením účasti -->
+    <div class="card p-4 shadow-sm">
+        <h2 class="mb-4 text-center">Seznam členů</h2>
+
+        <!-- Členové, kteří potvrdili, že jedou (zelený badge) -->
+        <div class="mb-3">
+            <h5>Jedou:</h5>
+            <div>
+                <span th:each="entry : ${stavy}"
+                      th:if="${entry.value == 'jede'}"
+                      th:text="${entry.key.Name}"
+                      class="badge bg-success me-2 mb-2"
+                      style="font-size: 1rem; padding: 0.5em 1em; display: inline-block;">
+                </span>
+            </div>
+        </div>
+
+        <!-- Členové, kteří potvrdili, že nejedou (červený badge) -->
+        <div class="mb-3">
+            <h5>Nejedou:</h5>
+            <div>
+                <span th:each="entry : ${stavy}"
+                      th:if="${entry.value == 'nejede'}"
+                      th:text="${entry.key.Name}"
+                      class="badge bg-danger me-2 mb-2"
+                      style="font-size: 1rem; padding: 0.5em 1em; display: inline-block;">
+                </span>
+            </div>
+        </div>
+
+        <!-- Členové, kteří nepotvrdili účast (šedý badge) -->
+        <div class="mb-3">
+            <h5>Nepotvrzeno:</h5>
+            <div>
+                <span th:each="entry : ${stavy}"
+                      th:if="${entry.value == 'nepotvrzeno'}"
+                      th:text="${entry.key.Name}"
+                      class="badge bg-secondary me-2 mb-2"
+                      style="font-size: 1rem; padding: 0.5em 1em; display: inline-block;">
+                </span>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Bootstrap a vlastní JS -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
